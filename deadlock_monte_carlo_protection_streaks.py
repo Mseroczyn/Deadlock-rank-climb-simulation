@@ -139,25 +139,19 @@ def simulate_one_climb(win_rate):
                 if state == 6:
                     return game
 
+
         else:
             win_streak = 0
-
-            # Protection is used only if the player started the game
-            # exactly at a 0 RP boundary.
-            started_at_zero = rp == 0
-
             rp -= BASE_POINTS
-
             if rp < 0:
-                if started_at_zero and protection > 0:
+                if protection > 0:
+                    # The loss removes any remaining RP and consumes protection.
                     protection -= 1
                     rp = 0
                 else:
-                    # Demote one subrank and carry the remaining RP loss.
+                    # Demote and carry the excess loss into the previous subrank.
                     state -= 1
                     rp += promotion_cost(state)
-
-                    # Protection is not granted after a demotion.
                     protection = 0
 
     return None
