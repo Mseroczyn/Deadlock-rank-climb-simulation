@@ -37,9 +37,13 @@ USE_PROTECTION = True
 # ...
 # Maximum win value: +450
 USE_STREAK_BONUS = True
-STREAK_START = 3
-STREAK_STEP = 30
-MAX_STREAK_BONUS = 150
+
+STREAK_BONUSES = {
+    3: 70,
+    4: 90,
+    5: 110,
+    6: 130,
+}
 
 # Promotion costs:
 # I -> II, II -> III, III -> IV, IV -> V, V -> VI, VI -> next Rank I
@@ -76,19 +80,13 @@ def protection_at(state):
 
     return 2
 
-
 def points_for_win(win_streak):
-    """
-    Return the RP gained for a win.
+    """Return the RP gained for a win."""
 
-    The exact Deadlock streak formula is unknown.
-    These settings are only an assumption for testing.
-    """
     if not USE_STREAK_BONUS:
         return BASE_POINTS
 
-    bonus_steps = max(0, win_streak - STREAK_START + 1)
-    bonus = min(bonus_steps * STREAK_STEP, MAX_STREAK_BONUS)
+    bonus = STREAK_BONUSES.get(min(win_streak, 6), 0)
 
     return BASE_POINTS + bonus
 
