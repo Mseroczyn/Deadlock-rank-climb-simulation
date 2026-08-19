@@ -126,7 +126,7 @@ The simple drift estimate is:
 This is an average-drift benchmark, not a prediction that every player will take exactly 583 games.
 Limitations
 The simulation does not model:
-Deadlock's unpublished real streak formula;
+any additional or hidden modifiers to the published win-streak bonuses;
 matchmaking-based RP adjustments;
 larger penalties during loss streaks;
 changing win probability as the player climbs or falls;
