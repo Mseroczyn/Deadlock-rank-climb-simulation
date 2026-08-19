@@ -41,45 +41,41 @@ Rank VI -> next I  2000 RP
 Total              7000 RP
 ```
 Important assumptions
-The exact Deadlock win-streak formula has not been published, so the streak values in this simulation are assumptions.
-The default streak model is:
-```text
+
+The simulation uses the following win-streak bonuses, based on the values shown in the in-game ranked tooltip:
+
 1st consecutive win: +300 RP
 2nd consecutive win: +300 RP
-3rd consecutive win: +330 RP
-4th consecutive win: +360 RP
-5th consecutive win: +390 RP
-6th consecutive win: +420 RP
-7th and later wins:  +450 RP
-```
+3rd consecutive win: +370 RP (+70 streak bonus)
+4th consecutive win: +390 RP (+90 streak bonus)
+5th consecutive win: +410 RP (+110 streak bonus)
+6th consecutive win: +430 RP (+130 streak bonus)
+7th and later wins:  +430 RP (+130 streak bonus)
+
+The streak bonus is therefore capped at +130 RP from the sixth consecutive win onward.
+
 This is controlled by:
-```python
+
 USE_STREAK_BONUS = True
-STREAK_START = 3
-STREAK_STEP = 30
-MAX_STREAK_BONUS = 150
-```
+
+STREAK_BONUSES = {
+    3: 70,
+    4: 90,
+    5: 110,
+    6: 130,
+}
+
 Loss protection is modelled as follows:
+
 protection is used only when a loss begins at exactly 0 RP;
 Rank I boundaries receive five protected losses;
 other subrank boundaries receive two;
 protection refreshes when the player promotes into a subrank;
 demotion does not grant protection.
-These details are modelling choices where the public description is not completely precise.
-Requirements
-Python 3 is required.
-No third-party packages are needed.
-Running in PyCharm
-Open the Python file in PyCharm.
-Edit the settings at the top.
-Right-click inside the editor.
-Select Run.
-Running from a terminal
-```bash
-python deadlock_monte_carlo_protection_streaks.py
-```
+
+These loss-protection details remain modelling choices where the exact behaviour of the live system is not completely known.
+
 Settings
-```python
 WIN_RATES = [46, 48, 50, 52, 55, 60]
 
 SIMULATIONS = 10_000
@@ -90,12 +86,14 @@ BASE_POINTS = 300
 USE_PROTECTION = True
 
 USE_STREAK_BONUS = True
-STREAK_START = 3
-STREAK_STEP = 30
-MAX_STREAK_BONUS = 150
-```
-`SIMULATIONS` is the number of independent simulated climbs for each win rate.
-`MAX_GAMES` is the maximum number of games allowed for each simulated player. A player stops earlier when they reach the target.
+STREAK_BONUSES = {
+    3: 70,
+    4: 90,
+    5: 110,
+    6: 130,
+}
+
+SIMULATIONS is the number of independent simulated climbs for each win rate. MAX_GAMES is the maximum number of games allowed for each simulated player. A player stops earlier when they reach the target.
 Example results
 Using 10,000 simulations per win rate, a 10,000-game limit, loss protection, and the default streak assumptions:
 Win rate	Reached next rank	Median games among successes	Mean games among successes	10th–90th percentile
