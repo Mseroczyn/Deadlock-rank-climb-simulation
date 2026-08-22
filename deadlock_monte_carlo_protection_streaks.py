@@ -31,9 +31,11 @@ USE_PROTECTION = True
 # Example with the settings below:
 # 1st win: +300
 # 2nd win: +300
-# 3rd win: +330
-# 4th win: +360
-# 5th win: +390
+# 3rd win: +370
+# 4th win: +390
+# 5th win: +410
+# 6th win: +430
+# 7th win: +430
 # ...
 # Maximum win value: +450
 USE_STREAK_BONUS = True
